@@ -4,7 +4,8 @@
 
 # 실행 결과 예시 
 
-![Cast-of-Friends](https://user-images.githubusercontent.com/68048434/182092892-ac65e776-92ca-4a34-8d35-8078c82a77fc.jpg)
+![sample](https://user-images.githubusercontent.com/68048434/190587798-a7f5b6dc-3ff2-4ae0-8130-c260fc739c53.jpg)
+
 
 
 # Environments
