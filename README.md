@@ -53,9 +53,7 @@ pip install Shapely
 
 아래 링크에서 미리 학습한 ckpt 폴더(exp_0)를 다운 받아 "LP_Vertex_Detection/experiments" 폴더에 배치
 
-Ex. "SNU_FaceRecognition/checkpoints_best/exp_0/ckpt.pth"
-
-구글 드라이브 주소 : 
+Ex. "LP_Vertex_Detection/experiments/exp_0/ckpt.pth"
 
 
 
