@@ -55,7 +55,7 @@ pip install Shapely
 
 Ex. "LP_Vertex_Detection/experiments/exp_0/ckpt.pth"
 
-
+https://drive.google.com/drive/folders/1i9s28H6lThreD8x99kiMD2KQrwLiHkYv?usp=sharing
 
 ## 코드 실행
 
