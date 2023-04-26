@@ -102,3 +102,63 @@ def evaluate_v(network, eval_dataloader, device, save_dir, save_img):
 
         avg_iou /= len(eval_dataloader)
         print(f"IOU RESULTS : {avg_iou}")
+
+
+def evaluate(network, eval_dataloader, device, logging):
+
+    with torch.no_grad():
+
+        network.eval()
+
+        eval_metric = 0
+
+        for idx, data in enumerate(tqdm(eval_dataloader)):
+
+            img, label = data
+            [img, label] = img2cuda([img, label], device)
+
+            pred = network(img)
+
+            eval_metric += compute_iou(pred, label)
+
+        eval_metric /= len(eval_dataloader)
+
+        print(eval_metric)
+
+        return eval_metric
+
+
+def inference(network, eval_dataloader, device, save_dir, save_img):
+
+    os.makedirs(save_dir, exist_ok=True)
+
+    with torch.no_grad():
+
+        network.eval()
+
+        for idx, data in enumerate(tqdm(eval_dataloader)):
+
+            img, img_t, label = data
+            img = img.squeeze().numpy()
+            
+            [img_t, label] = img2cuda([img_t, label], device)
+
+            pred = network(img_t)
+
+
+            pred = pred.detach().cpu().numpy().squeeze()
+
+            h, w, c = img.shape
+            pred[0::2] = pred[0::2] * w
+            pred[1::2] = pred[1::2] * h
+
+            pred = pred.astype('int32')
+
+            
+            if save_img:
+                cv2.line(img, (pred[0], pred[1]), (pred[0], pred[1]), (0, 0, 255), thickness=4)
+                cv2.line(img, (pred[2], pred[3]), (pred[2], pred[3]), (0, 0, 255), thickness=4)
+                cv2.line(img, (pred[4], pred[5]), (pred[4], pred[5]), (0, 0, 255), thickness=4)
+                cv2.line(img, (pred[6], pred[7]), (pred[6], pred[7]), (0, 0, 255), thickness=4)
+                
+                cv2.imwrite(f'{save_dir}/test{idx}.jpg', img)

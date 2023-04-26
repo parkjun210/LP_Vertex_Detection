@@ -54,7 +54,7 @@ def visualize():
     network.load_state_dict(ckpt['network'])
 
     with torch.no_grad():
-        evaluate_v(network, test_dataloader, device, save_dir = SAVE_DIR, save_img = SAVE_IMG)
+        inference(network, test_dataloader, device, save_dir = SAVE_DIR, save_img = SAVE_IMG)
 
 
 if __name__ == '__main__':

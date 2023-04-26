@@ -90,11 +90,18 @@ class Visual_Dataset(torch.utils.data.Dataset):
             if file.endswith('.jpg'):
                 self.imgs.append(file)
 
-        for file in os.listdir(os.path.join(args.data_dir, args.dataset_label, subset)):
-            if file.endswith('.json'):
-                self.labels.append(file)
-
         self.imgs = sorted(self.imgs)
+
+        os.path.join(args.data_dir, args.dataset_label, subset)
+
+        if os.path.exists(os.path.join(args.data_dir, args.dataset_label, subset)):
+            for file in os.listdir(os.path.join(args.data_dir, args.dataset_label, subset)):
+                if file.endswith('.json'):
+                    self.labels.append(file)
+        else: 
+            for i in range(len(self.imgs)):
+                self.labels.append('')
+
         self.labels = sorted(self.labels)
 
         self.transform_img = transforms.Compose(
@@ -118,17 +125,20 @@ class Visual_Dataset(torch.utils.data.Dataset):
         imgpath = os.path.join(DATA_DIR, DATASET_IMG, self.subset, self.imgs[idx])
         img = cv2.cvtColor(cv2.imread(imgpath),cv2.COLOR_BGR2RGB)
 
-        labelpath = os.path.join(DATA_DIR, DATASET_LABEL, self.subset, self.labels[idx])
+        if self.labels[idx] != '':
+            labelpath = os.path.join(DATA_DIR, DATASET_LABEL, self.subset, self.labels[idx])
 
-        label = list()
-        with open(labelpath, 'r') as json_file:
-            jf = json.load(json_file)
-            for _, value in jf.items():
-                label.append(value[0] / img.shape[1])
-                label.append(value[1] / img.shape[0])
+            label = list()
+            with open(labelpath, 'r') as json_file:
+                jf = json.load(json_file)
+                for _, value in jf.items():
+                    label.append(value[0] / img.shape[1])
+                    label.append(value[1] / img.shape[0])
+            label = np.array(label, dtype = np.float32)
+        else:
+            label = 0
 
         img_tensor = self.transform_img(img)
-        label = np.array(label, dtype = np.float32)
 
         return img, img_tensor, label
     
