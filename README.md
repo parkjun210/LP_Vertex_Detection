@@ -56,9 +56,9 @@ pip install Shapely
 ## pre-trained ckpt
 
 
-아래 링크에서 미리 학습한 ckpt 폴더(exp_0)를 다운 받아 "LP_Vertex_Detection/experiments" 폴더에 배치
+아래 링크에서 미리 학습한 ckpt.pth 파일을 다운 받아 "LP_Vertex_Detection/experiments" 폴더에 배치
 
-Ex. "LP_Vertex_Detection/experiments/exp_0/ckpt.pth"
+Ex. "LP_Vertex_Detection/experiments/ckpt.pth"
 
 https://drive.google.com/drive/folders/1i9s28H6lThreD8x99kiMD2KQrwLiHkYv?usp=sharing
 
