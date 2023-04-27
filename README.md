@@ -13,8 +13,6 @@ Red Vertex      : Model prediction
 
 # Environments
 ```
-git clone -b inference --single-branch https://github.com/parkjun210/LP_Vertex_Detection.git
-
 conda create -n ENV_NAME python=3.9
 
 conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
