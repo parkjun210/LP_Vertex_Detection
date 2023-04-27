@@ -4,9 +4,7 @@
 
 # 실행 결과 예시 
 
-![sample](https://user-images.githubusercontent.com/68048434/190587798-a7f5b6dc-3ff2-4ae0-8130-c260fc739c53.jpg)
-
-Green Vertex    : GT
+![inf_result](https://user-images.githubusercontent.com/68048434/234839227-a1ab0599-532f-497d-badd-bc8ecd4f69be.jpg)
 
 Red Vertex      : Model prediction
 
@@ -14,6 +12,8 @@ Red Vertex      : Model prediction
 # Environments
 ```
 conda create -n ENV_NAME python=3.9
+
+conda activate ENV_NAME
 
 conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
 
@@ -43,7 +43,7 @@ pip install Shapely
     |── config.py           : 입력 argument를 관리하는 파일
     |── model.py            : Model architecture
     |── train.py            : image에서 Alined face image (112 x 112)를 추출하는 코드
-    |── visualize.py        : LP Vertex Detection inference
+    |── inference.py        : LP Vertex Detection inference
 
 
 
@@ -62,9 +62,14 @@ https://drive.google.com/drive/folders/1i9s28H6lThreD8x99kiMD2KQrwLiHkYv?usp=sha
 
 ## 코드 실행
 
+  inference.py의 Argument 부분을 필요에 맞게 변경한다.
+
+    GPU_NUM:        사용할 GPU number
+    WEIGHT_PATH:    ckpt 파일 경로
+    INFERENCE_DIR:  inferece할 폴더 경로
+    SAVE_DIR:       inference 결과가 담길 폴더 경로
+    SAVE_IMG_FLAG:  Inference result image 저장 여부
+
   아래 명령어를 통해 실행한다. 
- 
-  python visualize.py 
      
-    python visualize.py 
-    
+    python inference.py 
