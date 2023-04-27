@@ -128,23 +128,27 @@ def evaluate(network, eval_dataloader, device, logging):
         return eval_metric
 
 
-def inference(network, eval_dataloader, device, save_dir, save_img):
+def inference(network, eval_dataloader, device, save_dir, save_img_flag):
 
-    os.makedirs(save_dir, exist_ok=True)
-
+    if save_img_flag:
+        os.makedirs(save_dir, exist_ok=True)
+        
+    f = open(f'{save_dir}/result.txt', 'w')
+    f.write(f'Image Name: top-left-x, top-left-y, bottom-left-x, bottom-left-y, bottom-right-x, bottom-right-y, top-right-x, top-right-y\n')
+    
     with torch.no_grad():
 
         network.eval()
 
         for idx, data in enumerate(tqdm(eval_dataloader)):
 
-            img, img_t, label = data
+            img, img_t, img_n = data
             img = img.squeeze().numpy()
             
-            [img_t, label] = img2cuda([img_t, label], device)
+            img_t = img2cuda(img_t, device)
+            img_t = img_t.to(device)
 
             pred = network(img_t)
-
 
             pred = pred.detach().cpu().numpy().squeeze()
 
@@ -154,11 +158,13 @@ def inference(network, eval_dataloader, device, save_dir, save_img):
 
             pred = pred.astype('int32')
 
-            
-            if save_img:
+            if save_img_flag:
                 cv2.line(img, (pred[0], pred[1]), (pred[0], pred[1]), (0, 0, 255), thickness=4)
                 cv2.line(img, (pred[2], pred[3]), (pred[2], pred[3]), (0, 0, 255), thickness=4)
                 cv2.line(img, (pred[4], pred[5]), (pred[4], pred[5]), (0, 0, 255), thickness=4)
                 cv2.line(img, (pred[6], pred[7]), (pred[6], pred[7]), (0, 0, 255), thickness=4)
                 
-                cv2.imwrite(f'{save_dir}/test{idx}.jpg', img)
+                cv2.imwrite(f'{save_dir}/test_{img_n[0]}', img)
+            f.write(f'{img_n[0]}: {pred[0]}, {pred[1]}, {pred[2]}, {pred[3]}, {pred[4]}, {pred[5]}, {pred[6]}, {pred[7]}\n')
+    f.close()
+                
