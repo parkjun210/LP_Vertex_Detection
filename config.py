@@ -27,9 +27,13 @@ def parse_training_args(parser):
     parser.add_argument('--dataset_img',    type=str,   default='images',   help='image dataset')
     parser.add_argument('--dataset_label',  type=str,   default='labels',   help='label dataset')
     parser.add_argument('--weights',        type=str,   default="ckpt.pth", help='Weight Name')
+    
+    parser.add_argument('--weights_path',   type=str,   default="experiments/ckpt.pth",       help='Weight path')
+    parser.add_argument('--inference_dir',   type=str,   default="images/test",       help='Weight path')
+    
 
     parser.add_argument('--save_dir',       type=str,   default="result",   help='Weight Name')
-    parser.add_argument('--save_img',       type=str2bool, default=True,    help='save test image or not')
+    parser.add_argument('--save_img_flag',       type=str2bool, default=True,    help='save test image or not')
 
     # Design Paramters
     parser.add_argument('--image_size', nargs = '+', type=int, default=[128, 256], help='Image Size')
